@@ -1,0 +1,89 @@
+<?php
+
+
+$title = $this->translate('Sign In'); # page title
+# meta keywords
+$this->headMeta()->appendName('keywords', 'Login, Sign In, Authenticate');
+# meta description
+$this->headMeta()->appendName('description', 'Login to my account');
+# page title
+$this->headTitle($this->escapeHtml($title));
+
+
+#form
+$form = $this->form;
+$form->setAttribute('action', $this->url('logins'));  #oops
+$form->prepare();
+
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="login">
+            <h3 class="mb-3 pt-2 text-md-center">
+                <?= $this->escapeHtml($this->translate('Member Login')); ?>
+            </h3>
+
+            <?= $this->form()->openTag($form); ?>
+
+            <span class="form-text text-muted pb-2">
+				<?= sprintf(
+                    $this->translate('Don\'t have an account yet? %sJoin here%s.'),
+                    '<a href="' . $this->url('signups') . '">', '</a>'
+                );
+                ?>
+			</span>
+
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('email')); ?>
+                <div class="form-group">
+                    <?= $this->formEmail($form->get('email')); ?>
+                </div>
+
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('email')); ?>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('password')); ?>
+                <!--                <span class="float-right">
+                	<? /*= sprintf(
+                        $this->translate('%sForgot Password?%s'),
+                        '<a href="' . $this->url('forgot') . '">',
+                        '</a>'
+                    );
+                    */ ?>
+                </span>-->
+
+                <div class="form-group">
+                    <?= $this->formPassword($form->get('password')); ?>
+                </div>
+
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('password')); ?>
+                </div>
+            </div>
+
+            <!-- check box -->
+            <div class="mb-3">
+                <div class="custom-control custom-checkbox">
+                    <?= $this->formCheckbox($form->get('recall')); ?>
+                    <?= $this->formLabel($form->get('recall')); ?>
+                </div>
+            </div>
+
+            <!-- submit button -->
+            <div class="mb-3 float-right">
+                <?= $this->formHidden($form->get('returnUrl')); ?>
+                <?= $this->formHidden($form->get('csrf')); ?>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('csrf')); ?>
+                </div>
+                <?= $this->formSubmit($form->get('account_login')); ?>
+            </div>
+
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>
